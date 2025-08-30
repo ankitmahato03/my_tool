@@ -1,4 +1,12 @@
-import { Calendar, File, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  Calendar,
+  File,
+  FileUpIcon,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -25,25 +33,30 @@ const items = [
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "JPG to PDF",
+    url: "/dashboard/jpg-to-pdf",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
+    title: "Lock Pdf",
+    url: "/dashboard/lock-pdf",
     icon: Search,
   },
   {
-    title: "Settings",
-    url: "#",
+    title: "Unlock Pdf",
+    url: "/dashboard/unlock-pdf",
     icon: Settings,
+  },
+  {
+    title: "Compress Pdf",
+    url: "/dashboard/compress-pdf",
+    icon: FileUpIcon,
   },
 ];
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" className="pt-4">
+    <Sidebar collapsible="icon" className="pt-4 m-2">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="flex gap-2 text-2xl text-blue-600 font-bold">
