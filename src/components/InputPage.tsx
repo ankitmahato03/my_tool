@@ -10,11 +10,11 @@ export default function FileUpload() {
           id="file-upload"
           type="file"
           accept="application/pdf"
-          onChange={handleFileChange}
+          onChange={}
           className="border bg-amber-200"
         />
 
-        <Button onClick={handleUpload} disabled={loading}>
+        <Button onClick={} disabled={}>
           {loading ? "Converting..." : "Submit"}
         </Button>
         {downloadUrl && (
