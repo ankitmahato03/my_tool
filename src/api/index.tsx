@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-export const api: AxiosInstance = axios.create({
+export const api = axios.create({
   baseURL: "http://localhost:8000",
 });
 
@@ -16,11 +16,20 @@ export const convertPdfToJpg = async (file: File) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      responseType: "blob",
     });
 
     return response.data; // backend should return JPG file data or download link
-  } catch (error: any) {
-    console.error("Error converting PDF to JPG:", error);
-    throw error.response?.data || { error: "Something went wrong" };
+  } catch (err: any) {
+    if (err.response) {
+      // Server responded with an error
+      console.error("Server error:", err.response.data);
+    } else if (err.request) {
+      // Request made but no response received
+      console.error("No response:", err.request);
+    } else {
+      // Something else happened
+      console.error("Error:", err.message);
+    }
   }
 };

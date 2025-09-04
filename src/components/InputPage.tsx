@@ -6,17 +6,28 @@ import { convertPdfToJpg } from "@/api";
 
 export default function FileUpload() {
   const [file, setFile] = useState<File | null>(null);
-  const [result, setResult] = useState<any>(null);
+  const [imageBlob, setImageBlob] = useState<Blob | null>(null);
 
   const handleSubmit = async () => {
     if (!file) return;
     try {
-      const data = await convertPdfToJpg(file);
-      setResult(data);
+      const blob = await convertPdfToJpg(file);
+      setImageBlob(blob);
     } catch (err) {
       console.error("Upload failed:", err);
     }
   };
+
+  const handleDownload = () => {
+    if (!imageBlob) return;
+    const url = window.URL.createObjectURL(imageBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "converted.jpg";
+    link.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center max-h-screen">
       <div className="flex gap-2 mt-10">
@@ -28,17 +39,19 @@ export default function FileUpload() {
           onChange={(e) => setFile(e.target.files?.[0] || null)}
         />
 
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-2 rounded ml-2"
-        >
+        <Button onClick={handleSubmit} className="ml-2">
           Convert
-        </button>
-
-        {result && (
-          <pre className="mt-4">{JSON.stringify(result, null, 2)}</pre>
-        )}
+        </Button>
       </div>
+
+      {imageBlob && (
+        <Button
+          onClick={handleDownload}
+          className="mt-4 bg-green-500 text-white"
+        >
+          Download JPG
+        </Button>
+      )}
     </div>
   );
 }
